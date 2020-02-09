@@ -33,7 +33,7 @@ router.get('/statistics',(req,res)=>{
             ++statistics.formats.svg
           }
         });
-        res.json(allImages)
+        res.json(statistics)
         return console.log(statistics)
     
       }
@@ -63,11 +63,11 @@ const getCsv = (nextPage) => {
         })
         output.push(row.join())
     })
+    console.log('Csv file written')
     return fs.writeFileSync(filename, output.join(os.EOL));
   
     }
     else{
-      console.log(allImagesDetailed.next_cursor)
       getCsv(allImagesDetailed.next_cursor)
     }
 })
