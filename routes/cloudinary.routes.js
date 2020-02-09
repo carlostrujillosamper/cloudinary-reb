@@ -5,7 +5,8 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
-const filename = path.join('/Users/carlostrujillosamper/rebellion/rebellion-back/output', 'allImages.csv');
+const filename = path.join(__dirname, 'allImages.csv');
+
 const output = []; 
 
 router.get('/statistics',(req,res)=>{
