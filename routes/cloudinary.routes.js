@@ -11,7 +11,7 @@ const filename = path.join(__dirname, 'allImages.csv')
 router.get("/statistics", (req, res) => {
   let statistics = {
     totalImages: "",
-    formats: { jpg: 0, png: 0, svg: 0, gif: 0 },
+    formats: {},
     biggestPicture: "",
     smallestPicture: "",
     avgSize: ""
@@ -24,7 +24,7 @@ router.get("/statistics", (req, res) => {
         allImages.push(...images.resources)
         if (!images.next_cursor) {
           statistics.totalImages = allImages.length
-          allImages.forEach(image => ++statistics.formats[image.format])
+          allImages.forEach(image => statistics.formats[image.format]==undefined ? statistics.formats[image.format]=1 :++statistics.formats[image.format])
           let maxSize = allImages.reduce(
             (prev, current) => (prev.bytes > current.bytes ? prev : current),
             1
