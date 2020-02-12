@@ -1,11 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const cloudinary = require("../configs/cloudinary.config");
-const fs = require("fs");
-const path = require("path");
 const { convertArrayToCSV } = require("convert-array-to-csv");
 
-const filename = path.join(__dirname, "allImages.csv");
 
 router.get("/statistics", (req, res) => {
   let statistics = {
@@ -42,8 +39,8 @@ router.get("/statistics", (req, res) => {
             allImages.reduce((total, current) => total + current.bytes, 0) /
               allImages.length
           );
-          res.json(statistics);
           console.log(statistics);
+          res.json(statistics);
         } else {
           getStatistics(images.next_cursor);
         }
@@ -79,7 +76,6 @@ router.get("/csv", (req, res) => {
             return { ...imagesDetailed };
           });
           let csvFromArrayOfArrays = convertArrayToCSV(allImagesDetailedFixed);
-          fs.writeFileSync(filename, csvFromArrayOfArrays, "utf8");
           res.attachment("allImages.csv");
           res.send(Buffer.from(csvFromArrayOfArrays));
           console.log("CSV file created");
